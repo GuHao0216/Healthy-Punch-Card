@@ -28,8 +28,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
         run: |
-          python3 auto.py --username=$username --password=$password >> ./checkin.log
-          tail checkin.log #避免日志上传失败丢失日志
+          python3 auto.py --username=$username --password=$password >> ./checkin257.log
+          tail checkin257.log #避免日志上传失败丢失日志
       - name: Commit #上传日志到仓库，可以自行修改 name 和 email
         env:
          NAME: bot
