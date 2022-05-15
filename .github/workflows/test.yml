@@ -49,7 +49,7 @@ jobs:
         uses: josStorer/get-current-time@v2
         id: time
         with:
-          format: YYYYMMDD-HH
+          format: YYYY-MM-DD
           utcOffset: "+08:00"
       # 发送邮件
       - name: Send Mail
@@ -59,7 +59,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.MAILUSERNAME }} # 邮箱账号
           password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
-          subject: CSU每日健康打卡情况 ${{ steps.time.outputs.readableTime }}
+          subject: CSU每日健康打卡情况 ${{ steps.time.outputs.formattedTime }}
           body: file://daily.log
           to: ${{ secrets.REVCEIVE_EMAIL_ADRESS }}
           from: GitHub Actions
