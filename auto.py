@@ -141,6 +141,7 @@ def main(username, password):
     if res['e'] == 0:
         print('填报完成')
     else:
+        print('失败信息：'+res['m'])
         raise Exception(res['m'])
 
 
