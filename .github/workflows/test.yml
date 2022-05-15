@@ -54,7 +54,6 @@ jobs:
           password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
           subject: CSU每日健康打卡情况
           body: file://daily.log
-#           to: bilibili_turkey@163.com
-          to: 1272639290@qq.com
+          to: ${{ secrets.REVCEIVE_EMAIL_ADRESS }}
           from: GitHub Actions
           content_type: text/html
