@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
           subject: CSU健康打卡 ${{ steps.time.outputs.formattedTime }}
           body: file://daily.log
-          to: ${{ secrets.REVCEIVE_EMAIL_ADRESS }}
+          to: ${{ secrets.REVCEIVE_EMAIL_ADDRESS }}
           from: CSU Healthy Bot
           content_type: text/html
       # 发送邮件
@@ -43,6 +43,6 @@ jobs:
           password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
           subject: CSU健康打卡 ${{ steps.time.outputs.formattedTime }}
           body: file://daily_lqm.log
-          to: ${{ secrets.REVCEIVE_EMAIL_ADRESS_LQM }}
+          to: ${{ secrets.REVCEIVE_EMAIL_ADDRESS_LQM }}
           from: CSU Healthy Bot
           content_type: text/html
