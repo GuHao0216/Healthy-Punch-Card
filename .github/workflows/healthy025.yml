@@ -7,7 +7,7 @@ on:
   - cron: '10 16 * * 2,5,0' # UTC+8小时=北京时间 16代表凌晨零点 UTC星期+1=北京时间  2,5,0对应周三，周六，周一
 
 jobs:
-  build:
+  job1:
 
     runs-on: ubuntu-latest
 
@@ -37,7 +37,13 @@ jobs:
           echo `date +%Y-%m-%d\ %H:%M:%S` | tee daily.log 
           echo `打卡失败` ｜tee -a daily.log
           python3 auto.py --username=$username --password=$password >> ./checkin025.log
-          tail -n 2 checkin025.log | tee daily.log #避免日志上传失败丢失日志
+          tail -n 2 checkin025.log | tee daily.log #避免日志上传失败丢失日志  
+
+  job2:
+    runs-on: ubuntu-latest
+    if: always()
+    needs: job1
+    steps:
       - name: Commit #上传日志到仓库，可以自行修改 name 和 email
         env:
          NAME: bot
