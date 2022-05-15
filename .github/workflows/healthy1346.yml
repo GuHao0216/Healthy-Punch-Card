@@ -28,24 +28,24 @@ jobs:
         run: |
           pip3 install -r requirements.txt
           
-      - name: Punch Card 1346 pre
-        run: |
-          echo `date +%Y-%m-%d\ %H:%M:%S` > daily.log 
-          echo "打卡失败" >> daily.log
+#       - name: Punch Card 1346 pre
+#         run: |
+#           echo `date +%Y-%m-%d\ %H:%M:%S` > daily.log 
+#           echo "打卡失败" >> daily.log
           
-      - name: Commit pre #上传日志到仓库，可以自行修改 name 和 email
-        env:
-         NAME: bot
-         EMAIL: bot@csu-covid19.com
-        run: |
-          git config --global user.name "$NAME"
-          git config --global user.email "$EMAIL"
-          git add .
-          git commit -m "bot checkin025"
-      - name: Push log pre
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.TOKEN }}
+#       - name: Commit pre #上传日志到仓库，可以自行修改 name 和 email
+#         env:
+#          NAME: bot
+#          EMAIL: bot@csu-covid19.com
+#         run: |
+#           git config --global user.name "$NAME"
+#           git config --global user.email "$EMAIL"
+#           git add .
+#           git commit -m "bot checkin025"
+#       - name: Push log pre
+#         uses: ad-m/github-push-action@master
+#         with:
+#           github_token: ${{ secrets.TOKEN }}
 
       - name: Punch Card 1346
         env:
