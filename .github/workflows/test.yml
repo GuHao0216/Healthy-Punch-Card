@@ -52,8 +52,9 @@ jobs:
           server_port: 465
           username: ${{ secrets.MAILUSERNAME }} # 邮箱账号
           password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
-          subject: 每日新馆疫情统计
+          subject: CSU每日健康打卡情况
           body: file://daily.log
-          to: bilibili_turkey@163.com
+#           to: bilibili_turkey@163.com
+          to: 1272639290@qq.com
           from: GitHub Actions
           content_type: text/html
