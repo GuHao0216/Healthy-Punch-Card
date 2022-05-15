@@ -44,6 +44,12 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TOKEN }}
+      # 获取当前时间
+      - name: Get Time
+        id: time
+        uses: Plabick/Remote-Time-Action@V1.0
+        with:
+          timezone: 'CST'
       # 发送邮件
       - name: Send Mail
         uses: dawidd6/action-send-mail@v2
@@ -52,7 +58,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.MAILUSERNAME }} # 邮箱账号
           password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
-          subject: CSU每日健康打卡情况
+          subject: CSU每日健康打卡情况 ${{ steps.time.outputs.dayOfTheWeek }}
           body: file://daily.log
           to: ${{ secrets.REVCEIVE_EMAIL_ADRESS }}
           from: GitHub Actions
