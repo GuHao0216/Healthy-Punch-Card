@@ -35,7 +35,7 @@ jobs:
         run: |
           echo -n `date +%Y-%m-%d\ %H:%M:%S`\ -\ >> ./checkin1346.log 
           python3 auto.py --username=$username --password=$password >> ./checkin1346.log
-          tail checkin1346.log #避免日志上传失败丢失日志
+          tail -n 2 checkin1346.log | tee daily.log #避免日志上传失败丢失日志
       - name: Commit #上传日志到仓库，可以自行修改 name 和 email
         env:
          NAME: bot
@@ -49,3 +49,22 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TOKEN }}
+      # 获取当前时间
+      - name: Get Time
+        id: time
+        uses: Plabick/Remote-Time-Action@V1.0
+        with:
+          timezone: 'CST'
+      # 发送邮件
+      - name: Send Mail
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: smtp.163.com
+          server_port: 465
+          username: ${{ secrets.MAILUSERNAME }} # 邮箱账号
+          password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
+          subject: CSU每日健康打卡情况 ${{ steps.time.outputs.dayOfTheWeek }}
+          body: file://daily.log
+          to: ${{ secrets.REVCEIVE_EMAIL_ADRESS }}
+          from: GitHub Actions
+          content_type: text/html
