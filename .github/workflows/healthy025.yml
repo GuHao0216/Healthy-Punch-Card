@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
         run: |
           echo `date +%Y-%m-%d\ %H:%M:%S` | tee daily.log 
-          echo `打卡失败` ｜tee -a daily.log
+          echo "打卡失败" ｜tee -a daily.log
           
       - name: Punch Card 025
         env:
