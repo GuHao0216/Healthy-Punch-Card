@@ -142,7 +142,7 @@ def main(username, password):
         print('填报完成')
     else:
         print('失败信息：'+res['m'])
-        raise Exception(res['m'])
+#         raise Exception(res['m'])
 
 
 if __name__ == "__main__":
