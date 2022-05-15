@@ -59,7 +59,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.MAILUSERNAME }} # 邮箱账号
           password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
-          subject: CSU每日健康打卡情况 ${{ steps.time.outputs.day }}
+          subject: CSU每日健康打卡情况 ${{ steps.time.outputs.readableTime }}
           body: file://daily.log
           to: ${{ secrets.REVCEIVE_EMAIL_ADRESS }}
           from: GitHub Actions
