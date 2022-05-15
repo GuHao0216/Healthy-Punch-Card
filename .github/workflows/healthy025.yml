@@ -44,6 +44,21 @@ jobs:
     if: always()
     needs: job1
     steps:
+      - name: Setup timezone
+        uses: zcong1993/setup-timezone@master
+        with:
+          timezone: Asia/Shanghai  
+      - uses: actions/checkout@v2
+
+      - name: Install Python
+        run: |
+          sudo apt update && \
+          sudo apt install python3
+        
+      - name: requirements
+        run: |
+          pip3 install -r requirements.txt
+          
       - name: Commit #上传日志到仓库，可以自行修改 name 和 email
         env:
          NAME: bot
