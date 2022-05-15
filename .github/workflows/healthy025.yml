@@ -27,15 +27,21 @@ jobs:
       - name: requirements
         run: |
           pip3 install -r requirements.txt
-
+          
+      - name: Punch Card 025 pre
+        env:
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+        run: |
+          echo `date +%Y-%m-%d\ %H:%M:%S` | tee daily.log 
+          echo `打卡失败` ｜tee -a daily.log
+          
       - name: Punch Card 025
         env:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
         run: |
           echo -n `date +%Y-%m-%d\ %H:%M:%S`\ -\ >> ./checkin025.log
-          echo `date +%Y-%m-%d\ %H:%M:%S` | tee daily.log 
-          echo `打卡失败` ｜tee -a daily.log
           python3 auto.py --username=$username --password=$password >> ./checkin025.log
           tail -n 2 checkin025.log | tee daily.log #避免日志上传失败丢失日志  
 
