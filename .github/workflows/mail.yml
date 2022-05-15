@@ -1,0 +1,35 @@
+name: mail
+
+on:
+  workflow_dispatch:
+
+  schedule:
+  - cron: '10 2 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      # 获取当前时间
+      - name: Get current time
+        uses: josStorer/get-current-time@v2
+        id: time
+        with:
+          format: YYYY-MM-DD
+          utcOffset: "+08:00"
+      # 发送邮件
+      - name: Send Mail
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: smtp.163.com
+          server_port: 465
+          username: ${{ secrets.MAILUSERNAME }} # 邮箱账号
+          password: ${{ secrets.MAILPASSWORD }} # 邮箱授权码
+          subject: CSU健康打卡 ${{ steps.time.outputs.formattedTime }}
+          body: file://daily.log
+          to: ${{ secrets.REVCEIVE_EMAIL_ADRESS }}
+          from: CSU Healthy Bot
+          content_type: text/html
