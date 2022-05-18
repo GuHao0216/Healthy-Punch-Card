@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import time
+import datetime
 import json
 import random
 import base64
@@ -131,23 +132,37 @@ class PunchCard(object):
             self.save_url, data=self.info)
         return json.loads(res.text)
 
+    # 新版Server酱推送
+def send_server(title, content):
+    server_content = {'text': title, 'desp': content}
+    server_url = "https://sctapi.ftqq.com/%s.send" % server_key
+    resp = requests.post(server_url, params=server_content)
+    print('新版Server酱推送状态码为: %s' % resp.status_code)
 
 def main(username, password):
     print("🚌 打卡任务启动")
+    t = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
     helper = PunchCard(username, password)
     helper.login()
     helper.getInfo()
     res = helper.post()
     if res['e'] == 0:
-        print('填报完成')
+        t += '填报完成'
+        print(t)
+        send_server('健康打卡成功',t)
     else:
-        print('失败信息：'+res['m'])
+        t += '失败信息：'+res['m']
+        print(t)
+        send_server('健康打卡失败',t)
 #         raise Exception(res['m'])
+    
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Healthy Punch Card')
     parser.add_argument('--username', type=str, default=None)
     parser.add_argument('--password', type=str, default=None)
+    parser.add_argument('--server_key', type=str, default=None)
     args = parser.parse_args()
+    server_key = args.server_key
     main(args.username, args.password)
