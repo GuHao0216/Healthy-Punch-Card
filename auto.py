@@ -140,8 +140,10 @@ def send_server(title, content):
     print('新版Server酱推送状态码为: %s' % resp.status_code)
 
 def main(username, password):
-    print("🚌 打卡任务启动")
+    m = " 🚌 打卡任务启动 "
+    print(m)
     t = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+    t += m
     helper = PunchCard(username, password)
     helper.login()
     helper.getInfo()
