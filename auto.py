@@ -14,7 +14,6 @@ from bs4 import BeautifulSoup
 from Cryptodome.Cipher import AES
 from Cryptodome.Util import Padding
 
-
 def randomString(length):
     '''
     获取随机字符串
@@ -112,6 +111,7 @@ class PunchCard(object):
         geo_obj = eval(geo_text)['addressComponent']
         area = geo_obj['province'] + " " + \
             geo_obj['city'] + " " + geo_obj['district']
+        check_area = area
         name = re.findall(r'realname: "([^\"]+)",', html)[0]
         number = re.findall(r"number: '([^\']+)',", html)[0]
 
@@ -149,7 +149,8 @@ def main(username, password):
     helper.getInfo()
     res = helper.post()
     if res['e'] == 0:
-        t += '填报完成'
+        t += '填报完成\n'
+        t += check_area
         print(t)
         send_server('健康打卡成功',t)
     else:
@@ -167,4 +168,5 @@ if __name__ == "__main__":
     parser.add_argument('--server_key', type=str, default=None)
     args = parser.parse_args()
     server_key = args.server_key
+    check_area = ""
     main(args.username, args.password)
